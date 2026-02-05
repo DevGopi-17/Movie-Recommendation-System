@@ -5,9 +5,7 @@ import requests
 from src.preprocess import preprocess_data
 from src.recommender import MovieRecommender
 
-# -----------------------------
 # Config
-# -----------------------------
 MOVIES_PER_PAGE = 15
 
 st.set_page_config(
@@ -15,34 +13,26 @@ st.set_page_config(
     layout="wide"
 )
 
-# -----------------------------
 # Session State
-# -----------------------------
 if "category_page" not in st.session_state:
     st.session_state.category_page = 1
 
 if "last_category" not in st.session_state:
     st.session_state.last_category = None
 
-# -----------------------------
 # TMDB API Key
-# -----------------------------
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 if not TMDB_API_KEY:
     st.error("TMDB API key not found. Set TMDB_API_KEY environment variable.")
     st.stop()
 
-# -----------------------------
 # Header
-# -----------------------------
 st.markdown(
     "<h1 style='text-align:center;'>🎬 Movie Recommendation System</h1>",
     unsafe_allow_html=True
 )
 
-# -----------------------------
 # Load Data
-# -----------------------------
 def load_movies(movies_path, credits_path):
     movies = pd.read_csv(movies_path)
     credits = pd.read_csv(credits_path)
@@ -55,9 +45,7 @@ processed_movies = preprocess_data(
 recommender = MovieRecommender(processed_movies)
 movie_list = processed_movies["title"].values
 
-# -----------------------------
 # Trending Movies
-# -----------------------------
 def get_trending_movies(api_key, count=5):
     url = f"https://api.themoviedb.org/3/trending/movie/week?api_key={api_key}"
     data = requests.get(url).json()
@@ -82,9 +70,7 @@ for idx, movie in enumerate(get_trending_movies(TMDB_API_KEY)):
             st.image(movie["poster"], use_container_width=True)
         st.caption(movie["title"])
 
-# -----------------------------
 # Search & Recommendation
-# -----------------------------
 st.markdown("## 🔍 Find a Movie")
 search_text = st.text_input("", placeholder="Search movie (Inception, Avatar...)")
 
@@ -107,9 +93,8 @@ if st.button("🎯 Recommend"):
                 st.image(movie["poster"], use_container_width=True)
             st.caption(movie["title"])
 
-# -----------------------------
+
 # Fetch Category Movies
-# -----------------------------
 def fetch_category_movies(api_key, category, page):
     url = "https://api.themoviedb.org/3/discover/movie"
 
@@ -145,9 +130,7 @@ def fetch_category_movies(api_key, category, page):
         for m in data.get("results", [])[:MOVIES_PER_PAGE]
     ]
 
-# -----------------------------
 # Category Pagination
-# -----------------------------
 st.markdown("## 🎞 Browse by Category")
 
 category = st.selectbox(
@@ -184,9 +167,8 @@ for idx, movie in enumerate(movies):
             st.image(movie["poster"], use_container_width=True)
         st.caption(movie["title"])
 
-# -----------------------------
+
 # Pagination Buttons
-# -----------------------------
 st.markdown("---")
 col1, col2, col3 = st.columns([1, 2, 1])
 
