@@ -1,4 +1,4 @@
-![Movie Recommendation System Banner](screenshots/movie_recommendation_system_banner.jpg)
+![Movie Recommendation System Banner](screenshots/Logo.png)
 
 # 🎬 Movie Recommendation System
 
