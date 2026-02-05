@@ -1,0 +1,125 @@
+# 🎬 Movie Recommendation System
+
+A **Netflix / IMDb-style Movie Recommendation Web App** built with **Python & Streamlit**, powered by **TMDB API** and **content-based filtering**.
+
+Users can:
+- Discover trending movies
+- Get personalized movie recommendations
+- Browse movies by category (Hollywood, K-Drama, Bollywood, etc.)
+- Navigate with clean **page-based pagination (Previous / Next)**
+
+---
+
+## 🚀 Features
+
+- 🔥 **Trending Movies** (TMDB weekly trends)
+- 🎯 **Content-Based Recommendation System**
+- 🔍 **Search Movies by Title**
+- 🎞 **Browse by Category**
+  - Hollywood
+  - K-Drama
+  - Bollywood
+  - Action
+  - Comedy
+  - Romance
+- 📄 **Production-Correct Pagination**
+  - Page 1 → fixed number of movies
+  - Next → new page (no duplication)
+  - Previous → go back
+- 🖼 **Movie Posters using TMDB API**
+- ⚡ Fast & interactive **Streamlit UI**
+
+---
+
+## 🧠 Recommendation Logic
+
+This project uses **content-based filtering**:
+- Movie overview
+- Genres
+- Cast
+- Crew
+
+Cosine similarity is used to find movies similar to the selected one.
+
+---
+
+## 🛠 Tech Stack
+
+- **Python 3**
+- **Streamlit**
+- **Pandas**
+- **Scikit-learn**
+- **TMDB API**
+- **Requests**
+
+---
+
+## 📂 Project Structure
+```bash
+Movie-Recommendation-System/
+│
+├── app.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+├── data/
+│   ├── tmdb_5000_movies.csv
+│   └── tmdb_5000_credits.csv
+│
+├── src/
+│   ├── preprocess.py
+│   └── recommender.py
+│
+└── screenshots/
+    ├── home.png
+    ├── recommendations.png
+    └── category-pagination.png
+
+```
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/your-username/movie-recommendation-system.git
+cd movie-recommendation-system
+```
+
+### 2️⃣ Create virtual environment (optional but recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate   # macOS/Linux
+venv\Scripts\activate      # Windows
+```
+
+### 3️⃣ Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Set TMDB API Key
+
+Create a TMDB API key from
+👉 https://www.themoviedb.org/
+
+Then set it as an environment variable:
+
+macOS/Linux
+```bash
+export TMDB_API_KEY="your_api_key_here"
+```
+
+Windows
+```bash
+set TMDB_API_KEY=your_api_key_here
+```
+
+### ▶️ Run the App
+```bash
+streamlit run app.py
+```
+The app will open automatically in your browser 🚀
+
