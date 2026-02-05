@@ -1,3 +1,5 @@
+![Movie Recommendation System Banner](screenshots/movie_recommendation_system_banner.jpg)
+
 # 🎬 Movie Recommendation System
 
 A **Netflix / IMDb-style Movie Recommendation Web App** built with **Python & Streamlit**, powered by **TMDB API** and **content-based filtering**.
