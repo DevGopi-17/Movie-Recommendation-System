@@ -171,14 +171,37 @@ def fetch_category_movies(api_key, category, page):
         "page": page
     }
 
+    # category_map = {
+    #     "Hollywood": {"with_original_language": "en"},
+    #     "K-Drama": {"with_original_language": "ko"},
+    #     "Bollywood": {"with_original_language": "hi"},
+    #     "Action": {"with_genres": "28"},
+    #     "Comedy": {"with_genres": "35"},
+    #     "Romance": {"with_genres": "10749"}
+    # }
     category_map = {
-        "Hollywood": {"with_original_language": "en"},
-        "K-Drama": {"with_original_language": "ko"},
-        "Bollywood": {"with_original_language": "hi"},
-        "Action": {"with_genres": "28"},
-        "Comedy": {"with_genres": "35"},
-        "Romance": {"with_genres": "10749"}
+    "Hollywood": {"with_original_language": "en"},
+    "Bollywood": {"with_original_language": "hi"},
+    "K-Drama": {"with_original_language": "ko"},
+
+    "Action": {"with_genres": "28"},
+    "Comedy": {"with_genres": "35"},
+    "Romance": {"with_genres": "10749"},
+    "Horror": {"with_genres": "27"},
+    "Thriller": {"with_genres": "53"},
+    "Sci-Fi": {"with_genres": "878"},
+    "Animation": {"with_genres": "16"},
+    "Drama": {"with_genres": "18"},
+    "Crime": {"with_genres": "80"},
+    "Fantasy": {"with_genres": "14"},
+    "Adventure": {"with_genres": "12"},
+    "Family": {"with_genres": "10751"},
+    "Mystery": {"with_genres": "9648"},
+    "War": {"with_genres": "10752"},
+    "Music": {"with_genres": "10402"},
+    "Western": {"with_genres": "37"},
     }
+
 
     params.update(category_map.get(category, {}))
     data = requests.get(url, params=params, timeout=10).json()
@@ -248,9 +271,18 @@ if recommend:
 
 st.markdown("## 🎞 Browse by Category")
 
+# category = st.selectbox(
+#     "",
+#     ["Hollywood", "K-Drama", "Bollywood", "Action", "Comedy", "Romance"],
+#     index=None,
+#     placeholder="Choose category"
+# )
+
 category = st.selectbox(
     "",
-    ["Hollywood", "K-Drama", "Bollywood", "Action", "Comedy", "Romance"],
+    ["Hollywood", "Bollywood", "K-Drama", "Action", "Comedy", "Romance", "Horror",
+      "Thriller", "Sci-Fi", "Animation", "Drama", "Crime", "Fantasy", "Adventure", 
+      "Family", "Mystery", "War", "Music", "Western"],
     index=None,
     placeholder="Choose category"
 )
