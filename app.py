@@ -170,15 +170,7 @@ def fetch_category_movies(api_key, category, page):
         "sort_by": "popularity.desc",
         "page": page
     }
-
-    # category_map = {
-    #     "Hollywood": {"with_original_language": "en"},
-    #     "K-Drama": {"with_original_language": "ko"},
-    #     "Bollywood": {"with_original_language": "hi"},
-    #     "Action": {"with_genres": "28"},
-    #     "Comedy": {"with_genres": "35"},
-    #     "Romance": {"with_genres": "10749"}
-    # }
+    
     category_map = {
     "Hollywood": {"with_original_language": "en"},
     "Bollywood": {"with_original_language": "hi"},
@@ -270,13 +262,6 @@ if recommend:
 # CATEGORY BROWSING
 
 st.markdown("## 🎞 Browse by Category")
-
-# category = st.selectbox(
-#     "",
-#     ["Hollywood", "K-Drama", "Bollywood", "Action", "Comedy", "Romance"],
-#     index=None,
-#     placeholder="Choose category"
-# )
 
 category = st.selectbox(
     "",
