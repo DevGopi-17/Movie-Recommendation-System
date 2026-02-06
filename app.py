@@ -14,6 +14,97 @@ st.set_page_config(
     layout="wide"
 )
 
+#DARK UI CSS
+st.markdown("""
+<style>
+.stApp {
+    background: radial-gradient(circle at top, #1f2937, #020617);
+    color: #e5e7eb;
+    font-family: Inter, sans-serif;
+}
+
+.block-container {
+    padding-top: 2rem;
+}
+
+.app-title {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 30px 0 18px;
+}
+
+.movie-card {
+    background: #111827;
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.45);
+    transition: transform .25s ease;
+}
+
+.movie-card:hover {
+    transform: scale(1.06);
+}
+
+.movie-card img {
+    border-radius: 10px;
+}
+
+.page-indicator {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ef4444;
+    margin: 10px 0 20px;
+}
+
+.stButton > button {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 10px 22px;
+    border: none;
+}
+
+.stButton > button:hover {
+    filter: brightness(1.1);
+}
+
+input, .stSelectbox {
+    background: #020617 !important;
+    color: #e5e7eb !important;
+    border-radius: 10px !important;
+}
+
+.skeleton {
+    height: 260px;
+    border-radius: 14px;
+    background: linear-gradient(
+        90deg,
+        #1f2937 25%,
+        #374151 37%,
+        #1f2937 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 0 }
+    100% { background-position: -100% 0 }
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 # SESSION STATE
 if "category_page" not in st.session_state:
     st.session_state.category_page = 1
@@ -24,7 +115,7 @@ if "last_category" not in st.session_state:
 # TMDB API KEY
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 if not TMDB_API_KEY:
-    st.error("❌ TMDB API key not found. Set TMDB_API_KEY environment variable.")
+    st.error("TMDB API key not found. Set TMDB_API_KEY environment variable.")
     st.stop()
 
 # HEADER
@@ -47,7 +138,7 @@ movie_list = processed_movies["title"].values
 
 
 # LOAD RECOMMENDER (CACHED)
-@st.cache_resource(show_spinner="🧠 Building recommendation model...")
+@st.cache_resource(show_spinner="Building recommendation model...")
 def load_recommender(df):
     return MovieRecommender(df)
 
@@ -113,38 +204,55 @@ for idx, movie in enumerate(get_trending_movies(TMDB_API_KEY)):
             st.image(movie["poster"], use_container_width=True)
         st.caption(movie["title"])
 
-# SEARCH & RECOMMEND
+# SEARCH & RECOMMENDATION
 st.markdown("## 🔍 Find a Movie")
 
-search_text = st.text_input("", placeholder="Search movie (Inception, Avatar...)")
+st.markdown("<div class='find-container'>", unsafe_allow_html=True)
 
-filtered_movies = (
-    [m for m in movie_list if search_text.lower() in m.lower()]
-    if search_text else movie_list
+st.markdown("<div class='find-title'></div>", unsafe_allow_html=True)
+
+# DEFAULT MOVIE SHOWN LIKE: Avatar ▼
+selected_movie = st.selectbox(
+    "",
+    movie_list,
+    index=list(movie_list).index("Avatar") if "Avatar" in movie_list else 0,
+    label_visibility="collapsed"
 )
 
-selected_movie = st.selectbox("Select movie", filtered_movies)
+st.markdown("<br>", unsafe_allow_html=True)
 
-if st.button("🎯 Recommend"):
+col1, col2, col3 = st.columns([1, 1, 1])
+with col2:
+    recommend = st.button("🎯 Recommend", use_container_width=True)
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+if recommend:
     with st.spinner("Finding similar movies..."):
-        recommendations = recommender.recommend(selected_movie, TMDB_API_KEY)
+        recommendations = recommender.recommend(
+            selected_movie,
+            TMDB_API_KEY
+        )
 
     st.markdown("## 🍿 Recommended Movies")
     cols = st.columns(5)
-
-    for idx, movie in enumerate(recommendations):
-        with cols[idx % 5]:
+    for i, movie in enumerate(recommendations):
+        with cols[i % 5]:
             if movie["poster"]:
                 st.image(movie["poster"], use_container_width=True)
             st.caption(movie["title"])
 
 
+
 # CATEGORY BROWSING
+
 st.markdown("## 🎞 Browse by Category")
 
 category = st.selectbox(
-    "Choose category",
-    ["Hollywood", "K-Drama", "Bollywood", "Action", "Comedy", "Romance"]
+    "",
+    ["Hollywood", "K-Drama", "Bollywood", "Action", "Comedy", "Romance"],
+    index=None,
+    placeholder="Choose category"
 )
 
 # Reset page when category changes
