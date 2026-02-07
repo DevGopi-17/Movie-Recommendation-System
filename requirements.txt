@@ -1,9 +1,17 @@
+# pandas
+# numpy
+# scikit-learn
+# nltk
+# streamlit
+# requests
+
+# rich
+# python-dotenv
+
 pandas
 numpy
 scikit-learn
 nltk
 streamlit
 requests
-altair>=4.2
-rich
-python-dotenv
+altair
