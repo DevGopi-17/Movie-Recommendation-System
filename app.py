@@ -2,12 +2,16 @@ import streamlit as st
 import pandas as pd
 import os
 import requests
+import tmdbsimple as tmdb
 from src.preprocess import preprocess_data
 from src.recommender import MovieRecommender
 
 
 
+
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+tmdb.API_KEY = TMDB_API_KEY
+
 
 
 # CONFIG
