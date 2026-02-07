@@ -30,15 +30,17 @@ class MovieRecommender:
 
         movie_index = self.movies[titles == movie].index[0]
 
-        distances = sorted(
+        #distances = sorted(
+        similar_movies = sorted(
             list(enumerate(self.similarity[movie_index])),
             reverse=True,
             key=lambda x: x[1]
-        )
+        ) [1:10]
 
         recommendations = []
 
-        for i in distances[1:6]:
+        #for i in distances[1:6]:
+        for i in similar_movies:
             movie_id = self.movies.iloc[i[0]].movie_id
             title = self.movies.iloc[i[0]].title
             poster = fetch_poster(movie_id, api_key)
