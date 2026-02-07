@@ -4,3 +4,5 @@ scikit-learn
 nltk
 streamlit
 requests
+altair
+python-dotenv
