@@ -8,6 +8,7 @@ from src.recommender import MovieRecommender
 
 
 
+
 # CONFIG
 MOVIES_PER_PAGE = 15
 
