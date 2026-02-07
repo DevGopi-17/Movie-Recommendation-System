@@ -7,6 +7,8 @@ from src.recommender import MovieRecommender
 
 
 
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
 
 # CONFIG
 MOVIES_PER_PAGE = 15
