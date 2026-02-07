@@ -131,10 +131,25 @@ st.markdown(
 
 
 # LOAD + PREPROCESS DATA (CACHED)
+# @st.cache_data(show_spinner="📦 Loading movie dataset...")
+# def load_and_process_movies():
+#     movies = pd.read_csv("data/tmdb_5000_movies.csv")
+#     credits = pd.read_csv("data/tmdb_5000_credits.csv")
+#     merged = movies.merge(credits, on="title")
+#     return preprocess_data(merged)
+
 @st.cache_data(show_spinner="📦 Loading movie dataset...")
 def load_and_process_movies():
-    movies = pd.read_csv("data/tmdb_5000_movies.csv")
-    credits = pd.read_csv("data/tmdb_5000_credits.csv")
+    import os
+    import pandas as pd
+
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    movies_file = os.path.join(BASE_DIR, "data", "tmdb_5000_movies.csv")
+    credits_file = os.path.join(BASE_DIR, "data", "tmdb_5000_credits.csv")
+
+    movies = pd.read_csv(movies_file)
+    credits = pd.read_csv(credits_file)
+
     merged = movies.merge(credits, on="title")
     return preprocess_data(merged)
 
