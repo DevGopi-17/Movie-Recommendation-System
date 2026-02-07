@@ -1,12 +1,3 @@
-# pandas
-# numpy
-# scikit-learn
-# nltk
-# streamlit
-# requests
-
-# rich
-# python-dotenv
 
 pandas
 numpy
@@ -15,3 +6,4 @@ nltk
 streamlit
 requests
 altair
+tmdbsimple
