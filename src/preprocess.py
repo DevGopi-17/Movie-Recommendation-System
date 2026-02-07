@@ -58,15 +58,17 @@ def preprocess_data(movies):
     movies["cast"] = movies["cast"].apply(lambda x: [i.replace(" ", "") for i in x])
     movies["crew"] = movies["crew"].apply(lambda x: x.replace(" ", ""))
 
+    #weighed tags (improvement)
     movies["tags"] = (
-        movies["overview"]
-        + movies["genres"]
-        + movies["keywords"]
-        + movies["cast"]
-        + movies["crew"].apply(lambda x: [x])
+        movies["overview"] * 1 +          # lowest weight
+        movies["genres"] * 3 +            # highest weight
+        movies["keywords"] * 3 +          # high importance
+        movies["cast"] * 2 +              # medium
+        movies["crew"].apply(lambda x: [x] * 2)  # director weighted
     )
 
     movies["tags"] = movies["tags"].apply(lambda x: " ".join(x).lower())
     movies["tags"] = movies["tags"].apply(stem)
 
     return movies[["movie_id", "title", "tags"]]
+
