@@ -4,6 +4,6 @@ scikit-learn
 nltk
 streamlit
 requests
-altair.vegalite.v4
-vega_datasets
-
+altair>=4.2
+rich
+python-dotenv
