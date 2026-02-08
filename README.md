@@ -134,6 +134,29 @@ Movie-Recommendation-System/
 ```
 ---
 
+## 🏗️ System Architecture
+
+```mermaid
+C4Context
+    title Movie Recommendation System
+
+    %% --- Users ---
+    Person(user, "User", "Interacts with the system via UI")
+
+    %% --- Systems / Containers ---
+    System(ui, "Streamlit UI", "Displays movies, search, categories, trailers")
+    System(logic, "Application Logic", "Handles recommendation flow, category browsing, session state")
+    System(engine, "Recommendation Engine", "Processes data, computes similarities, generates recommendations")
+    System(data, "Data & External Services", "Local TMDB CSVs and TMDB API for trending movies, trailers, and posters")
+
+    %% --- Relationships ---
+    Rel(user, ui, "Uses")
+    Rel(ui, logic, "Sends user actions")
+    Rel(logic, engine, "Requests recommendations / preprocessing")
+    Rel(engine, data, "Fetches movie data / trailers")
+```
+
+---
 
 ## ⚙️ Installation & Setup
 
