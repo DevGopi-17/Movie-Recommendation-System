@@ -4,6 +4,13 @@
 
 A **Netflix / IMDb–style Movie Recommendation Web App** built with **Python & Streamlit**, powered by the **TMDB API** and a **content-based recommendation engine**.
 
+
+🔗 **Live Demo:**  
+https://movie-recommendation-system--gopiprajapati20.replit.app
+
+[![Streamlit App](https://img.shields.io/badge/Live%20Demo-Streamlit-red)](https://movie-recommendation-system--gopiprajapati20.replit.app)
+
+---
 Users can:
 - Discover trending movies
 - Select a movie from a dropdown and get similar recommendations
