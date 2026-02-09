@@ -9,11 +9,13 @@ A **Netflix / IMDb–style Movie Recommendation Web App** built with **Python & 
 https://movie-recommendation-system--gopiprajapati20.replit.app
 
 [![Streamlit App](https://img.shields.io/badge/Live%20Demo-Streamlit-red)](https://movie-recommendation-system--gopiprajapati20.replit.app)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 ---
-Users can:
+## 👤 What Users Can Do
+
 - Discover trending movies
-- Select a movie from a dropdown and get similar recommendations
+- Select a movie and get similar recommendations
 - Browse movies by category and genre
 - Navigate smoothly using page-based pagination
 
@@ -23,31 +25,23 @@ Users can:
 
 - 🔥 **Trending Movies**
   - Weekly trending movies from TMDB
-- 🎯 **Content-Based Movie Recommendations**
+- 🎯 **Content-Based Recommendations**
   - Based on genres, overview, cast, and crew
 - 🎬 **Movie Selection via Dropdown**
-  - Clean UI (no search box clutter)
+  - Clean UI (no search clutter)
 - 🎞 **Browse by Category & Genre**
-  - Hollywood  
-  - Bollywood  
-  - K-Drama  
-  - Action  
-  - Comedy  
-  - Romance  
-  - Horror  
-  - Thriller  
-  - Sci-Fi  
-  - Drama  
-  - Animation  
+  - Hollywood, Bollywood, K-Drama  
+  - Action, Comedy, Romance  
+  - Horror, Thriller, Sci-Fi  
+  - Drama, Animation
 - 📄 **Production-Correct Pagination**
-  - Fixed number of movies per page
+  - Fixed movies per page
   - Next / Previous navigation
-  - No duplicate results
-- 🖼 **High-Quality Movie Posters**
+  - No duplicates
+- 🖼 **High-Quality Posters**
   - Fetched directly from TMDB
-- ⚡ **Fast & Interactive Streamlit UI**
-  - Cached data & API calls for performance
-
+- ⚡ **Fast & Interactive UI**
+  - Cached API calls & data processing
 ---
 
 ## 🖼️ Screenshots
@@ -124,7 +118,10 @@ Movie-Recommendation-System/
 │
 ├── src/
 │   ├── preprocess.py
-│   └── recommender.py
+│   ├── recommender.py
+│   ├── cache.py
+│   ├── tmdb_api.py
+│   └── ui_components.py
 │
 └── screenshots/
     ├── Trending_now.png
@@ -137,23 +134,40 @@ Movie-Recommendation-System/
 ## 🏗️ System Architecture
 
 ```mermaid
-C4Context
-    title Movie Recommendation System
+C4Container
+    title Movie Recommendation System – Architecture
 
     %% --- Users ---
-    Person(user, "User", "Interacts with the system via UI")
+    Person(user, "User", "Browses movies and gets recommendations")
 
-    %% --- Systems / Containers ---
-    System(ui, "Streamlit UI", "Displays movies, search, categories, trailers")
-    System(logic, "Application Logic", "Handles recommendation flow, category browsing, session state")
-    System(engine, "Recommendation Engine", "Processes data, computes similarities, generates recommendations")
-    System(data, "Data & External Services", "Local TMDB CSVs and TMDB API for trending movies, trailers, and posters")
+    %% --- Frontend / UI ---
+    Container(ui, "Streamlit UI (app.py)", "Streamlit", "Handles layout, user input, navigation, pagination")
+
+    Container(components, "UI Components", "Python", "Reusable movie cards, buttons, trailers (ui_components.py)")
+
+    %% --- Application Layer ---
+    Container(logic, "Application Logic", "Python", "Coordinates recommendation flow, category browsing, session state")
+
+    Container(cache, "Caching Layer", "Streamlit Cache", "Caches API calls and heavy computations (cache.py)")
+
+    %% --- Recommendation Engine ---
+    Container(engine, "Recommendation Engine", "Scikit-learn", "Content-based filtering using cosine similarity")
+
+    %% --- Data & External Services ---
+    ContainerDb(csv, "Local Movie Dataset", "CSV", "TMDB 5000 Movies & Credits dataset")
+
+    System_Ext(tmdb, "TMDB API", "Provides posters, trending movies, trailers, metadata")
 
     %% --- Relationships ---
-    Rel(user, ui, "Uses")
-    Rel(ui, logic, "Sends user actions")
-    Rel(logic, engine, "Requests recommendations / preprocessing")
-    Rel(engine, data, "Fetches movie data / trailers")
+    Rel(user, ui, "Interacts with")
+    Rel(ui, components, "Renders UI using")
+    Rel(ui, logic, "Triggers actions")
+    Rel(logic, cache, "Uses cached results")
+    Rel(logic, engine, "Requests recommendations")
+    Rel(engine, csv, "Loads & processes")
+    Rel(logic, tmdb, "Fetches movies, posters, trailers")
+    Rel(cache, tmdb, "Caches API responses")
+
 ```
 
 ---
@@ -201,4 +215,13 @@ set TMDB_API_KEY=your_api_key_here
 streamlit run app.py
 ```
 The app will open automatically in your browser 🚀
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.  
+You are free to use, modify, and distribute this project with attribution.
+
+See the [LICENSE](LICENSE) file for details.
 
