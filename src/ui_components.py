@@ -1,3 +1,4 @@
+from math import exp
 import streamlit as st
 
 def render_movie_card(movie, trailer=None, section="general", row_idx=0, col_idx=0):
@@ -20,10 +21,16 @@ def render_movie_card(movie, trailer=None, section="general", row_idx=0, col_idx
         """,
         unsafe_allow_html=True
     )
+    col1, col2, col3 = st.columns([1, 2, 1])
 
-    # ACTIONS (STACKED VERTICALLY) 
-    if st.button("ℹ️ Details", key=details_key):
-        st.session_state.sidebar_movie = movie
+    with col2:
+        if st.button("ℹ️ Details", key=details_key, use_container_width=True):
+            st.session_state.sidebar_movie = movie
+
+
+
+
+
 
     if trailer:
         with st.expander("▶️ Trailer", expanded=False):
